@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Comparator;
 
 @Controller
 public class ProfileController {
@@ -63,7 +64,15 @@ public class ProfileController {
         }
 
         PaginationDTO pagination =  questionService.profileList(user.getId(),page,size);
+        pagination.getPages().sort(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                int i = o1 > o2 ? 1 : -1;
+                return i;
+            }
+        });
         model.addAttribute("pagination",pagination);
         return "profile";
+
     }
 }

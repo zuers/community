@@ -60,7 +60,7 @@ public class QuestionService {
             questionDTOList.add(questionDTO);
         }
         paginationDTO.setQuestions(questionDTOList);
-        Integer totalCount = questionMapper.count();
+        Integer totalCount = questionMapper.countByUserId(userId);
         paginationDTO.setPagination(totalCount,page,size);
         return paginationDTO;
     }
