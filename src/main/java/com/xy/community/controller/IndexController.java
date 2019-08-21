@@ -28,6 +28,8 @@ public class IndexController {
     @Autowired
     QuestionService questionService;
 
+
+
     @GetMapping("/")
     public String index(HttpServletRequest request,
                         Model model,
