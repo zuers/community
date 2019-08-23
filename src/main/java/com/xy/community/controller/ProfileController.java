@@ -33,22 +33,23 @@ public class ProfileController {
             @RequestParam(name = "page",defaultValue = "1") Integer page,
             @RequestParam(name = "size",defaultValue = "5") Integer size
     ) {
-        User user = new User();
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("token")) {
-                        String token = cookie.getValue();
-                        user = userMapper.findByToken(token);
-                        if (user != null) {
-                            request.getSession().setAttribute("user", user);
-                        }
-                        break;
-                    }
-                }
-            }
-        }
+//        User user = new User();
+//        Cookie[] cookies = request.getCookies();
+//        if (cookies != null) {
+//            if (cookies != null) {
+//                for (Cookie cookie : cookies) {
+//                    if (cookie.getName().equals("token")) {
+//                        String token = cookie.getValue();
+//                        user = userMapper.findByToken(token);
+//                        if (user != null) {
+//                            request.getSession().setAttribute("user", user);
+//                        }
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+        User user = (User) request.getSession().getAttribute("user");
 
         if (user == null) {
             return "redirect:/";
