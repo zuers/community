@@ -13,14 +13,14 @@ public class PaginationDTO {
     private Boolean showFirstPage;
     private Boolean showNext;
     private Boolean showEndPage;
-    private Integer page;
-    private List<Integer> pages = new ArrayList();
-    private Integer totalPage;
+    private long page;
+    private List<Long> pages = new ArrayList();
+    private long totalPage;
 
 
-    public void setPagination(Integer totalCount, Integer page, Integer size) {
+    public void setPagination(long totalCount, long page, Integer size) {
 
-        Integer totalPage = (totalCount%size == 0)?(totalCount/size):(totalCount/size+1);
+        long totalPage = (totalCount%size == 0)?(totalCount/size):(totalCount/size+1);
         this.totalPage = totalPage;
         if (page > totalPage) page = totalPage;
         if (page < 1) page = 1;
@@ -37,9 +37,9 @@ public class PaginationDTO {
             }
         }
 
-        this.showPrevious = (page == 1)?(false):(true);
+        this.showPrevious = (page == 1l)?(false):(true);
         this.showNext = (page == totalPage)?(false):(true);
-        this.showFirstPage = (pages.contains(1))?(false):(true);
+        this.showFirstPage = ((pages.contains(1l))?(false):(true));
         this.showEndPage = (pages.contains(totalPage))?(false):(true);
 
 

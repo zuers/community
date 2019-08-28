@@ -52,9 +52,9 @@ public class IndexController {
 //            }
 //        }
         PaginationDTO pagination = questionService.list(page,size);
-        pagination.getPages().sort(new Comparator<Integer>() {
+        pagination.getPages().sort(new Comparator<Long>() {
             @Override
-            public int compare(Integer o1, Integer o2) {
+            public int compare(Long o1, Long o2) {
                 int i = o1 > o2 ? 1 : -1;
                 return i;
             }
