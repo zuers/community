@@ -2,7 +2,6 @@ package com.xy.community.controller;
 
 import com.xy.community.dto.AccessTokenDTO;
 import com.xy.community.dto.GithubUser;
-import com.xy.community.mapper.UserMapper;
 import com.xy.community.model.User;
 import com.xy.community.provider.GithubProvider;
 import com.xy.community.service.UserService;
@@ -59,7 +58,7 @@ public class AuthorizeController {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             userService.createOrUpdate(user);
-            response.addCookie(new Cookie("token",token));
+            response.addCookie(new Cookie("token", token));
             return "redirect:/";
         } else {
             return "redirect:/";
@@ -70,7 +69,7 @@ public class AuthorizeController {
     public String logout(HttpServletRequest request,
                          HttpServletResponse response) {
         request.getSession().removeAttribute("user");
-        Cookie cookie = new Cookie("token",null);
+        Cookie cookie = new Cookie("token", null);
         cookie.setMaxAge(0);
         cookie.setPath("/");
         response.addCookie(cookie);

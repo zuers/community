@@ -2,6 +2,7 @@ package com.xy.community.service;
 
 import com.xy.community.dto.PaginationDTO;
 import com.xy.community.dto.QuestionDTO;
+import com.xy.community.exception.CustomizeException;
 import com.xy.community.mapper.QuestionMapper;
 import com.xy.community.mapper.UserMapper;
 import com.xy.community.model.Question;
@@ -74,6 +75,9 @@ public class QuestionService {
 
     public QuestionDTO getById(Long id) {
         Question question = questionMapper.selectByPrimaryKey(id);
+        if (question == null) {
+            throw new CustomizeException("问题不存在");
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
         User user = userMapper.selectByPrimaryKey(questionDTO.getCreator());
@@ -96,7 +100,10 @@ public class QuestionService {
 
             QuestionExample example = new QuestionExample();
             example.createCriteria().andIdEqualTo(question.getId());
-            questionMapper.updateByExampleSelective(updateQuestion, example);
+            int updated = questionMapper.updateByExampleSelective(updateQuestion, example);
+            if (updated != 1) {
+
+            }
         }
     }
 }
