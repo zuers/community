@@ -2,6 +2,7 @@ package com.xy.community.service;
 
 import com.xy.community.dto.PaginationDTO;
 import com.xy.community.dto.QuestionDTO;
+import com.xy.community.exception.CustomizeErrorCode;
 import com.xy.community.exception.CustomizeException;
 import com.xy.community.mapper.QuestionMapper;
 import com.xy.community.mapper.UserMapper;
@@ -76,7 +77,7 @@ public class QuestionService {
     public QuestionDTO getById(Long id) {
         Question question = questionMapper.selectByPrimaryKey(id);
         if (question == null) {
-            throw new CustomizeException("问题不存在");
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
@@ -102,8 +103,17 @@ public class QuestionService {
             example.createCriteria().andIdEqualTo(question.getId());
             int updated = questionMapper.updateByExampleSelective(updateQuestion, example);
             if (updated != 1) {
-
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
         }
+    }
+
+    public void incViewCount(Long id) {
+        Question question = questionMapper.selectByPrimaryKey(id);
+        Question record = new Question();
+        record.setViewCount(question.getViewCount()+1);
+        QuestionExample example = new QuestionExample();
+        example.createCriteria().andIdEqualTo(id);
+        questionMapper.updateByExampleSelective(record, example);
     }
 }

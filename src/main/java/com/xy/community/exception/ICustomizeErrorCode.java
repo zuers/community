@@ -7,5 +7,5 @@ package com.xy.community.exception;
  * @Modified by:
  */
 public interface ICustomizeErrorCode {
-    String message = null;
+    String getMessage();
 }
