@@ -52,7 +52,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public PaginationDTO profileList(Integer userId, Integer page, Integer size) {
+    public PaginationDTO profileList(Long userId, Integer page, Integer size) {
         Integer offset = size * (page - 1);
 
         QuestionExample example = new QuestionExample();
@@ -94,6 +94,8 @@ public class QuestionService {
         if(question.getId() == null){
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
+            question.setViewCount(0);
+            question.setCommentCount(0);
             questionMapper.insert(question);
         }else {
             question.setGmtModified(question.getGmtCreate());

@@ -37,7 +37,8 @@ public class AuthorizeController {
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
-                           HttpServletResponse response) {
+                           HttpServletResponse response,
+                           HttpServletRequest request) {
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
 
         accessTokenDTO.setClient_id(clientId);
@@ -59,6 +60,7 @@ public class AuthorizeController {
             user.setGmtModified(user.getGmtCreate());
             userService.createOrUpdate(user);
             response.addCookie(new Cookie("token", token));
+            request.getSession().setAttribute("user",user);
             return "redirect:/";
         } else {
             return "redirect:/";
